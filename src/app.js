@@ -7,6 +7,9 @@ const cors = require('cors');
 //import routes handler
 const router = require('./modules/router/router.service');
 
+//import custom modules
+const { handleError } = require('./utils');
+
 //Creates express app
 const app = express();
 
@@ -18,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Handle route requests
 app.use('/api', router);
+
+app.use(handleError);
 
 //Connect to database
 mongoose
