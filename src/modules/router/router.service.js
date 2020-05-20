@@ -4,23 +4,23 @@ const router = require('express').Router();
 const userService = require('../user/user.service');
 
 router.get('/', (req, res) => {
-	res.send(process.env.DB_HOST);
+	res.json({ isUserAuth: req.isUserAuth, userId: req.userId });
 });
 
 router.post('/signin', (req, res, next) => {
-	userService
+	userService()
 		.signIn(req.body)
 		.then((response) => res.json(response))
 		.catch((e) => next(e));
 });
 router.post('/signup', (req, res, next) => {
-	userService
+	userService()
 		.signUp(req.body)
 		.then((user) => res.json(user))
 		.catch((error) => next(error));
 });
 router.get('/users', async (req, res) => {
-	userService
+	userService()
 		.users()
 		.then((user) => res.json(user))
 		.catch((error) => next(error));

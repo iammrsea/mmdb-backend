@@ -9,19 +9,22 @@ const router = require('./modules/router/router.service');
 
 //import custom modules
 const { handleError } = require('./utils');
+const authorizationService = require('./modules/authorization/authorization.service');
 
 //Creates express app
 const app = express();
 
-//Initialize middleware
+//Initialize middleware stack
 dotEnv.config();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(authorizationService);
 
 //Handle route requests
 app.use('/api', router);
 
+//Handle errors
 app.use(handleError);
 
 //Connect to database
