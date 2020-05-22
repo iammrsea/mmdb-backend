@@ -15,25 +15,41 @@ const marketSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		images: [{ type: String, required: true }],
+		images: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Image',
+				required: true,
+			},
+		],
 		address: {
-			type: Schema.Types.ObjectId,
-			ref: 'Address',
+			type: String,
 			required: true,
+		},
+		location: {
+			type: {
+				type: String,
+				default: 'Point',
+			},
+			coordinates: [{ type: Number, required: true }],
 		},
 	},
 	{ timestamps: true }
 );
 
-userSchema.post('remove', removeAddress);
+marketSchema.post('remove', removeLinkedDocuments);
 
-async function removeAddress(doc) {
-	console.log('post middleware ', doc);
-	const Address = mongoose.model('Address');
-	await Address.remove({ market: doc._id });
+async function removeLinkedDocuments(doc) {
+	// console.log('post middleware ', doc);
+	const Image = mongoose.model('Image');
+	await Image.remove({ _id: { $in: doc.images } });
 }
 
 const Market = mongoose.model('Market', marketSchema);
-Market.createIndexes({ name: 'text', foodCategory: 'text' });
+// // marketSchema.indexes({ name: 'text', foodCategory: 'text', location: '2dsphere' });
+// Market.createIndexes({ name: 'text', foodCategory: 'text', location: '2dsphere' });
+// Market.on('index', (error, data) => {
+// 	console.log('index event called', error, data);
+// });
 
 module.exports = Market;
