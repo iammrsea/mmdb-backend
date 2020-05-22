@@ -10,7 +10,7 @@ class TransformationService {
 	_getNextCursor(data, limit) {
 		const _nextDataItem = data[limit];
 		if (_nextDataItem) {
-			return new CursorService().encode(data[data.length - 1]._id);
+			return CursorService.getInstance().encode(data[data.length - 1]._id);
 		}
 		return '';
 	}
@@ -20,6 +20,9 @@ class TransformationService {
 			return data.filter((dataItem) => dataItem._id !== _nextDataItem._id);
 		}
 		return data;
+	}
+	static getInstance() {
+		return new TransformationService();
 	}
 }
 

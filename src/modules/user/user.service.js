@@ -60,6 +60,9 @@ class UserService {
 			{ expiresIn: '72h' }
 		);
 	}
+	static getInstance() {
+		return new UserService();
+	}
 }
 
-module.exports = () => new UserService();
+module.exports = UserService;
