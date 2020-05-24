@@ -4,6 +4,7 @@ const multer = require('multer')();
 //import services
 const UserService = require('../user/user.service');
 const MarketService = require('../market/market.service');
+const CategoryService = require('../category/category.service');
 
 router.get('/', (req, res) => {
 	res.json({ isUserAuth: req.isUserAuth, userId: req.userId });
@@ -72,6 +73,29 @@ router.put('/markets/:id', multer.array('images', 3), (req, res, next) => {
 	const marketService = MarketService.getInstance(req.isUserAuth);
 	marketService
 		.update({ id, files, body })
+		.then((result) => res.json(result))
+		.catch((e) => next(e));
+});
+
+//Category routes
+router.get('/categories', (req, res, next) => {
+	const catService = CategoryService.getInstance();
+	catService
+		.getCategories()
+		.then((result) => res.json(result))
+		.catch((e) => next(e));
+});
+router.post('/categories', (req, res, next) => {
+	const catService = CategoryService.getInstance();
+	catService
+		.create(req.body)
+		.then((result) => res.json(result))
+		.catch((e) => next(e));
+});
+router.post('/categories/:id', (req, res, next) => {
+	const catService = CategoryService.getInstance();
+	catService
+		.delete(req.params.id)
 		.then((result) => res.json(result))
 		.catch((e) => next(e));
 });
