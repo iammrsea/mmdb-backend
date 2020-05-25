@@ -25,7 +25,7 @@ app.use(authorizationService);
 app.use('/api', router);
 
 //Handle errors
-app.use(handleError);
+// app.use(handleError);
 
 //Connect to database
 mongoose

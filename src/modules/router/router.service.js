@@ -44,13 +44,13 @@ router.get('/markets/nearest-market', (req, res, next) => {
 		.then((result) => res.json(result))
 		.catch((e) => next(e));
 });
-router.post('/markets/bulk', (req, res, next) => {
-	const marketService = MarketService.getInstance();
-	marketService
-		.createBulk(req.body)
-		.then((result) => res.json(result))
-		.catch((e) => next(e));
-});
+// router.post('/markets/bulk', (req, res, next) => {
+// 	const marketService = MarketService.getInstance();
+// 	marketService
+// 		.createBulk(req.body)
+// 		.then((result) => res.json(result))
+// 		.catch((e) => next(e));
+// });
 router.get('/markets/:id', (req, res, next) => {
 	const { id } = req.params;
 	const marketService = MarketService.getInstance();
@@ -70,9 +70,20 @@ router.delete('/markets/:id', (req, res, next) => {
 router.put('/markets/:id', multer.array('images', 3), (req, res, next) => {
 	const { files, body } = req;
 	const { id } = req.params;
+
 	const marketService = MarketService.getInstance(req.isUserAuth);
 	marketService
 		.update({ id, files, body })
+		.then((result) => res.json(result))
+		.catch((e) => next(e));
+});
+router.put('/markets/image/:id', multer.single('image'), (req, res, next) => {
+	const { file, body } = req;
+	const { id } = req.params;
+
+	const marketService = MarketService.getInstance(req.isUserAuth);
+	marketService
+		.updateImage({ id, file, body })
 		.then((result) => res.json(result))
 		.catch((e) => next(e));
 });
@@ -92,7 +103,7 @@ router.post('/categories', (req, res, next) => {
 		.then((result) => res.json(result))
 		.catch((e) => next(e));
 });
-router.post('/categories/:id', (req, res, next) => {
+router.delete('/categories/:id', (req, res, next) => {
 	const catService = CategoryService.getInstance();
 	catService
 		.delete(req.params.id)
@@ -107,16 +118,11 @@ router.post('/signin', (req, res, next) => {
 		.then((response) => res.json(response))
 		.catch((e) => next(e));
 });
-router.post('/signup', (req, res, next) => {
-	UserService.getInstance()
-		.signUp(req.body)
-		.then((user) => res.json(user))
-		.catch((error) => next(error));
-});
-router.get('/users', async (req, res) => {
-	UserService.getInstance()
-		.users()
-		.then((user) => res.json(user))
-		.catch((error) => next(error));
-});
+// router.post('/signup', (req, res, next) => {
+// 	UserService.getInstance()
+// 		.signUp(req.body)
+// 		.then((user) => res.json(user))
+// 		.catch((error) => next(error));
+// });
+
 module.exports = router;

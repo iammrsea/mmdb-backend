@@ -36,15 +36,12 @@ class ImageService {
 	async saveToDatabase(images) {
 		return await ImageModel.insertMany(images);
 	}
-	async updateImages(images, ids) {
-		const promises = images.map((image, i) => {
-			return ImageModel.findOneAndUpdate({ _id: ids[i] }, image, {
-				upsert: true,
-				new: true,
-				useFindAndModify: false,
-			});
+	async updateImage(image, id) {
+		return await ImageModel.findOneAndUpdate({ _id: id }, image, {
+			upsert: true,
+			new: true,
+			useFindAndModify: false,
 		});
-		return await Promise.all(promises);
 	}
 	static getInstance() {
 		return new ImageService();
