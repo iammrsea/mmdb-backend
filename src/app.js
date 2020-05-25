@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dotEnv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 
 //import routes handler
 const router = require('./modules/router/router.service');
@@ -20,9 +21,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(authorizationService);
+app.use(express.static(path.join(__dirname, '../build')));
 
 //Handle route requests
 app.use('/api', router);
+
+//Server static assets
+app.get('*', function (req, res) {
+	res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 //Handle errors
 // app.use(handleError);

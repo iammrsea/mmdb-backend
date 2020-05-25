@@ -6,10 +6,6 @@ const UserService = require('../user/user.service');
 const MarketService = require('../market/market.service');
 const CategoryService = require('../category/category.service');
 
-router.get('/', (req, res) => {
-	res.json({ isUserAuth: req.isUserAuth, userId: req.userId });
-});
-
 //Market routes
 router.post('/markets', multer.array('images', 3), (req, res, next) => {
 	const { files, body } = req;
