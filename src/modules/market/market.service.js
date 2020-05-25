@@ -43,7 +43,7 @@ class MarketService {
 	}
 
 	async search(searchText) {
-		await Market.createIndexes();
+		// await Market.createIndexes();
 		// console.log(await Market.listIndexes());
 		try {
 			let query = Market.find({ $text: { $search: searchText } });
