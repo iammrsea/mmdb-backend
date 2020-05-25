@@ -114,11 +114,11 @@ router.post('/signin', (req, res, next) => {
 		.then((response) => res.json(response))
 		.catch((e) => next(e));
 });
-// router.post('/signup', (req, res, next) => {
-// 	UserService.getInstance()
-// 		.signUp(req.body)
-// 		.then((user) => res.json(user))
-// 		.catch((error) => next(error));
-// });
+router.post('/signup', (req, res, next) => {
+	UserService.getInstance()
+		.signUp(req.body)
+		.then((user) => res.json(user))
+		.catch((error) => next(error));
+});
 
 module.exports = router;
