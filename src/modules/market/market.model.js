@@ -47,7 +47,7 @@ async function removeLinkedDocuments(doc) {
 
 const Market = mongoose.model('Market', marketSchema);
 // // marketSchema.indexes({ name: 'text', foodCategory: 'text', location: '2dsphere' });
-// Market.createIndexes({ name: 'text', foodCategory: 'text', location: '2dsphere' });
+Market.createIndexes({ name: 'text', foodCategory: 'text', location: '2dsphere' });
 // Market.on('index', (error, data) => {
 // 	console.log('index event called', error, data);
 // });

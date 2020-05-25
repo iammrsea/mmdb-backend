@@ -38,7 +38,7 @@ app.get('*', function (req, res) {
 mongoose
 	.connect(process.env.DB_HOST, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then((value) => {
-		console.log(`Successfully connected to database: ${process.env.DB_HOST}`);
+		console.log(`Successfully connected to database: ${process.env.PROD_DB_HOST}`);
 
 		return app.listen(process.env.PORT || 5000);
 	})
